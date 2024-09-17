@@ -60,7 +60,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() {
-
       Fluttertoast.showToast(
         msg: "Counter is now $_counter",
         toastLength: Toast.LENGTH_SHORT,
@@ -92,7 +91,8 @@ class _MyHomePageState extends State<MyHomePage> {
           Positioned.fill(
             child: Image.network(
               'https://media1.tenor.com/m/vOfmcVd-haMAAAAC/code-purpose-of-life.gif',
-              fit: BoxFit.cover, // This makes the GIF cover the entire background
+              fit: BoxFit
+                  .cover, // This makes the GIF cover the entire background
             ),
           ),
           // Content on top of the GIF
@@ -102,11 +102,17 @@ class _MyHomePageState extends State<MyHomePage> {
               children: <Widget>[
                 const Text(
                   'You have pushed the button this many times:',
-                  style: TextStyle(color: Colors.white), // Text color to stand out
+                  style:
+                      TextStyle(color: Colors.white), // Text color to stand out
                 ),
+                Text("data"),
+                FilledButton(onPressed: () => {}, child: Text("click")),
                 Text(
                   '$_counter',
-                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: Colors.white),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineMedium!
+                      .copyWith(color: Colors.white),
                 ),
               ],
             ),
