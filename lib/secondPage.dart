@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MySecondPage extends StatefulWidget {
   const MySecondPage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -20,30 +12,52 @@ class MySecondPage extends StatefulWidget {
 }
 
 class _MySecondPageState extends State<MySecondPage> {
-  int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      Fluttertoast.showToast(
-        msg: "Counter is now $_counter",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  //url för om man trycker på rött piller
+  Future<void> _launchURLRed() async {
+    final url = Uri.parse('https://www.imdb.com/title/tt0133093/');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      Fluttertoast.showToast(msg: 'Could not launch $url');
+    }
   }
+
+  //url för om man trycker på blå piller
+  Future<void> _launchURLBlue() async {
+    final url = Uri.parse('https://tenor.com/sv/search/he-chose-poorly-gifs'); // Din URL här
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      Fluttertoast.showToast(msg: 'Could not launch $url');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double imageWidth = screenWidth * 0.4; //40% av skärmens bredd
+    double imageHeight = imageWidth * 1.12;
+
+    //definierar storlekar beroende på plattform
+    double bluePillWidth;
+    double bluePillHeight;
+    double redPillWidth;
+    double redPillHeight;
+
+    if (Theme.of(context).platform == TargetPlatform.android) {
+      bluePillWidth = imageWidth;
+      bluePillHeight = imageHeight;
+      redPillWidth = imageWidth;
+      redPillHeight = imageHeight;
+    } else {
+      bluePillWidth = 336;
+      bluePillHeight = 383;
+      redPillWidth = 342;
+      redPillHeight = 383;
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -51,42 +65,67 @@ class _MySecondPageState extends State<MySecondPage> {
       ),
       body: Stack(
         children: <Widget>[
-          // GIF as background
+          //GIF som bakgrund
           Positioned.fill(
             child: Image.network(
               'https://media1.tenor.com/m/vOfmcVd-haMAAAAC/code-purpose-of-life.gif',
               fit: BoxFit
-                  .cover, // This makes the GIF cover the entire background
+                  .cover,
             ),
           ),
-          // Content on top of the GIF
+
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const Text(
-                  'You have pushed the button this many times:',
-                  style:
-                  TextStyle(color: Colors.white), // Text color to stand out
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: _launchURLRed,
+                      child: Image.asset(
+                        'assets/images/redpill.png',
+                        width: redPillWidth,
+                        height: redPillHeight,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        if (Theme.of(context).platform == TargetPlatform.android) {
+                          SystemNavigator.pop(); //stäng android appen
+                        } else {
+                          _launchURLBlue(); //öppna url om det är på web
+                        }
+                      },
+                      child: Image.asset(
+                        'assets/images/bluepill.png',
+                        width: bluePillWidth,
+                        height: bluePillHeight,
+                      ),
+                    ),
+                  ],
                 ),
-                Text("data"),
-                FilledButton(onPressed: () => {}, child: Text("click")),
-                Text(
-                  '$_counter',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineMedium!
-                      .copyWith(color: Colors.white),
+                SizedBox(height: 16.0),
+                Container(
+                  width: 300,
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      style: TextStyle(color: Colors.white),
+                      children: <TextSpan>[
+                        TextSpan(text: 'This is your last chance. After this, there is no turning back. '),
+                        TextSpan(text: 'You take the blue pill', style: TextStyle(color: Colors.blue)),
+                        TextSpan(text: ' - the story ends, you wake up in your bed and believe whatever you want to believe. '),
+                        TextSpan(text: 'You take the red pill', style: TextStyle(color: Colors.red)),
+                        TextSpan(text: ' - you stay in Wonderland and I show you how deep the rabbit hole goes.'),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
