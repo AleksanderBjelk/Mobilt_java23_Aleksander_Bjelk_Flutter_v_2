@@ -1,36 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_v2_aleksander_bjelk/secondPage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      //home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const MyHomePage(title: 'HOME'),
-        '/second':(context) => const MySecondPage(title:'SecondPage'),
-      },
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class MySecondPage extends StatefulWidget {
+  const MySecondPage({super.key, required this.title});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -44,10 +16,10 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MySecondPage> createState() => _MySecondPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MySecondPageState extends State<MySecondPage> {
   int _counter = 0;
 
   void _incrementCounter() {
@@ -61,6 +33,11 @@ class _MyHomePageState extends State<MyHomePage> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
+      // This call to setState tells the Flutter framework that something has
+      // changed in this State, which causes it to rerun the build method below
+      // so that the display can reflect the updated values. If we changed
+      // _counter without calling setState(), then the build method would not be
+      // called again, and so nothing would appear to happen.
       _counter++;
     });
   }
@@ -90,15 +67,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 const Text(
                   'You have pushed the button this many times:',
                   style:
-                      TextStyle(color: Colors.white), // Text color to stand out
+                  TextStyle(color: Colors.white), // Text color to stand out
                 ),
                 Text("data"),
-                FilledButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/second');
-                  },
-                  child: const Text("Go to Second Page"),
-                ),
+                FilledButton(onPressed: () => {}, child: Text("click")),
                 Text(
                   '$_counter',
                   style: Theme.of(context)
