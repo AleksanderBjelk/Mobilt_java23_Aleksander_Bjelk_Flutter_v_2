@@ -11,6 +11,7 @@ Teacher: Alrik He
 In this assigment I have created an app where you can press a button to switch page using routes. The app is functional in web and Android. While in the second page you can "press" a picture (an image button) to choose two different outcomes based on the [Matrix movie](https://www.imdb.com/title/tt0133093/). Choosing the red pill takes you to the movie IMDB page, choosing blue takes you to a different website while using web. If you are using Android, choosing the blue pill kills the app.<br>
 <br>
 ### Functionality
+- Write name
 - Switch between pages
 - Choose between blue or red pill
 
@@ -25,7 +26,7 @@ In this assigment I have created an app where you can press a button to switch p
 Start page
 <br>
 <br>
-<img width="1512" alt="Skärmavbild 2024-09-17 kl  21 34 57" src="https://github.com/user-attachments/assets/5ef0e035-aad4-41f3-82a6-29ca5ca1cf3c">
+<img width="1512" alt="Skärmavbild 2024-09-19 kl  09 49 28" src="https://github.com/user-attachments/assets/d79d1729-f99e-403c-be3e-4260654ea7be">
 <br>
 <br>
 <br>
