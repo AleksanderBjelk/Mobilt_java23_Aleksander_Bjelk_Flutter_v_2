@@ -110,7 +110,7 @@ class _MySecondPageState extends State<MySecondPage> {
                   width: 300,
                   child: RichText(
                     textAlign: TextAlign.center,
-                    text: TextSpan(
+                    text: const TextSpan(
                       style: TextStyle(color: Colors.white),
                       children: <TextSpan>[
                         TextSpan(text: 'This is your last chance. After this, there is no turning back. '),
